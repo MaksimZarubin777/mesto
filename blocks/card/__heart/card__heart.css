@@ -12,6 +12,6 @@
 }
 
 .card__heart:active {
-  background-image: url(/images/Union.svg);
+  background-image: url(../../../images/Union.svg);
   opacity: 1;
 }
