@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto Russia</title>
+    <link rel="stylesheet" href="./pages/index.css">
+    <link rel="stylesheet" href="./vendor/fonts/fonts.css">
+  </head>
+  <body>
+    <main>
+      <div class="page">
+        <div class="popup">
+          <form class="popup__container">
+            <h2 class="text text__popup-title">Редактировать профиль</h2>
+            <input id="profile-name" type="text" value="" class="popup__input">
+            <img src="./images/Line2.png" alt="Линия" class="popup__line">
+            <input id="profile-job" type="text" value="" class="popup__input">
+            <img src="./images/Line2.png" alt="Линия" class="popup__line">
+            <button type='submit' class="popup__button-submit"></button>
+            <button class="popup__button-close"></button>
+          </form>
+        </div>
+        <header class="header">
+          <img src="./images/header__logo.svg" alt="Лого" class="header__logo">
+          <img src="./images/header__line.png" class="header__line" alt="Линия">
+        </header>
+        <div class="content">
+          <section class="profile">
+            <img src="./images/Avatar.png" class="profile__avatar" alt="Аватар">
+            <div class="profile__info">
+              <div class="profile__title">
+                <h1 class="text text__profile-title">Жак-Ив Кусто</h1>
+                <button class="profile__button-edit"></button>
+              </div>
+              <p class="text text__profile-subtitle">Исследователь океана</p>
+            </div>
+            <button class="profile__button-add"></button>
+          </section>
+          <section class="elements">
+            <div class="card">
+              <img src="./images/img1.png" alt="Карачаевск" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Карачаевск</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="./images/img2.png" alt="Гора Эльбрус" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Гора Эльбрус</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="./images/img3.png" alt="Домбай" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Домбай</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="./images/img2.png" alt="Гора Эльбрус" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Гора Эльбрус</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="./images/img3.png" alt="Домбай" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Домбай</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="./images/img1.png" alt="Карачаево-Черкессия" class="card__img">
+              <div class="card__info">
+                <h2 class="text text__card-title">Карачаево-Черкессия</h2>
+                <button class="card__heart"></button>
+              </div>
+            </div>
+          </section>
+          <footer class="footer">
+            <p class="text text__footer">&copy; 2022 Mesto Russia</p>
+          </footer>
+        </div> 
+      </div>   
+    </main>
+    <script src="/script.js"></script> 
+  </body>
+</html>

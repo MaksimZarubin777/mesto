@@ -1,0 +1,17 @@
+.card__heart {
+  width: 22px;
+  height: 19px;
+  align-self: center;
+  background-image: url(/images/heart-no-color.svg);
+  border: 0;
+  background-color: transparent;
+}
+
+.card__heart:hover {
+  opacity: .6;
+}
+
+.card__heart:active {
+  background-image: url(/images/Union.svg);
+  opacity: 1;
+}
