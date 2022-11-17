@@ -4,6 +4,7 @@
   padding-top: 2.66%;
   border-radius: 10px;
   position: relative;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 }
 
 @media screen and (max-width: 1100px) {
@@ -27,6 +28,5 @@
 @media screen and (max-width: 568px) {
   .popup__container {
     width: 88.13%;
-    margin-top: 20.5vh;
   }
 }

@@ -6,8 +6,6 @@ let myName = document.querySelector('.profile__text-title');
 let myJob = document.querySelector('.profile__text-subtitle');
 let closePopup = document.querySelector('.popup__button-close');
 let formElement = document.querySelector('.popup__container');
-let nameInput = document.querySelector('#profile-name'); 
-let jobInput = document.querySelector('#profile-job');
 
 function toOpen () {
   popup.classList.add('popup_opened');
@@ -17,17 +15,21 @@ function toOpen () {
 
 function toClose() {
   popup.classList.remove('popup_opened');
-  nameInput.value = myName.textContent;
-  jobInput.value = myJob.textContent;
+  // Функция именно для закрытия попапа, которая не изменяет введенное значение в инпут.
+  // если удалить две строчки ниже, то введя что-то в инпут, закрыв и открыв попап снова, 
+  // то в инпуте будет предыдущий текст. Не нашел другого решения :)
+  profileName.value = myName.textContent; 
+  profileJob.value = myJob.textContent;
 }
 
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
-    nameInputValue = nameInput.value;
-    jobInputValue = jobInput.value;
+    let nameInputValue = profileName.value;
+    let jobInputValue = profileJob.value;
     myName.textContent = nameInputValue;
     myJob.textContent = jobInputValue;
-    popup.classList.remove('popup_opened');
+    // при сохранении используется просто удаление класса, т.к. у функции toClose немного другойфункционал
+    popup.classList.remove('popup_opened'); 
 }
 
 openPopup.addEventListener('click', toOpen);

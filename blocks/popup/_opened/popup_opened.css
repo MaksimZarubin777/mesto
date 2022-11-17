@@ -1,12 +1,3 @@
 .popup_opened {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media screen and (max-width: 568px) {
-  .popup_opened {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
 }
