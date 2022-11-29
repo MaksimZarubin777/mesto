@@ -91,7 +91,8 @@ const toOpenPlace = () => {
 const toClosePlace = () => {
   popupPlace.classList.remove('popup_opened');
 }
-// Создание карточки
+
+// Создать карточку
 createCard = (item) => {
   const card = cardTemplate.content.cloneNode(true);
   card.querySelector('.card__title').textContent = item.name;
@@ -115,16 +116,8 @@ const addNewCard = (evt) => {
     }
   ];
   initialCards.unshift(input[0]);
-  // const card = cardTemplate.content.cloneNode(true);
-  // card.querySelector('.card__title').textContent = initialCards[0].name;
-  // card.querySelector('.card__img').src = initialCards[0].link;
-  // card.querySelector('.card__img').alt = initialCards[0].name;
-  // const likeBtn = card.querySelector('.card__heart');
-  // const deleteBtn = card.querySelector('.card__trash');
-  // likeBtn.addEventListener('click', likeClick);
-  // deleteBtn.addEventListener('click', deleteClick);
-  createCard(initialCards);
-  elements.prepend(card);
+  item = initialCards[0];
+  elements.prepend(createCard(item));
   toClosePlace();
 }
 
@@ -145,6 +138,7 @@ const toOpenPlaceInfo = (e) => {
   popupPlaceInfo.classList.add('popup_opened');
   popupPlaceInfo.querySelector('.popup__place-title').textContent = e.target.closest('.card').querySelector('.card__title').textContent;
   popupPlaceInfo.querySelector('.popup__place-img').src = e.target.closest('.card').querySelector('.card__img').src;
+  popupPlaceInfo.querySelector('.popup__place-img').alt = e.target.closest('.card').querySelector('.card__title').textContent;
 }
 
 // Закрыть Popup с картинкой
@@ -154,19 +148,9 @@ const toClosePlaceInfo = () => {
 
 // Отображение карточек из InitialCards
 initialCards.forEach(function(item) {
-  // const card = cardTemplate.content.cloneNode(true);
-  // card.querySelector('.card__title').textContent = item.name;
-  // card.querySelector('.card__img').src = item.link;
-  // card.querySelector('.card__img').alt = item.name;
-  // const likeBtn = card.querySelector('.card__heart');
-  // const deleteBtn = card.querySelector('.card__trash');
-  // likeBtn.addEventListener('click', likeClick);
-  // deleteBtn.addEventListener('click', deleteClick);
-  // card.querySelector('.card__img').addEventListener('click', toOpenPlaceInfo);
-  createCard(initialCards);
-  elements.append(card);
+  createCard(item);
+  elements.append(createCard(item));
 })
-
 
 openPopup.addEventListener('click', toOpen);
 closePopup.addEventListener('click', toClose);
