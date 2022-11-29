@@ -27,21 +27,22 @@
         <button class="profile__button-add" type="button"></button>
       </section>
       <section class="elements" aria-label="Места">
-        <template id="card">
-        <article class="card">
-          <img src="./images/img1.png" alt="Карачаевск" class="card__img">
-          <div class="card__info">
-            <h2 class="card__title">Карачаевск</h2>
-            <button class="card__heart" type="button"></button>
-          </div>
-        </article>
-        </template>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__text">&copy; 2022 Mesto Russia</p>
     </footer>
   </div>
+  <template id="card">
+    <article class="card">
+      <button class="card__trash" type="button"></button>
+      <img src="" alt="" class="card__img">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button class="card__heart" type="button"></button>
+      </div>
+    </article>
+    </template>
   <div class="popup">
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
@@ -52,6 +53,25 @@
           class="popup__input">
         <button type='submit' class="popup__button-submit">Сохранить</button>
       </form>
+    </div>
+  </div>
+  <div class="popup" id="popup-place">
+    <div class="popup__container">
+      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form id="new-place" name="new-place-popup">
+        <input id="place-name" name="place-name" placeholder="Название" type="text" value="" class="popup__input">
+        <input id="place-img" name="place-img" placeholder="Ссылка на картинку" type="text" value=""
+          class="popup__input">
+        <button type='submit' id="create-btn" class="popup__button-submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_place" id="popup-place-info">
+    <div class="popup__container_place">
+      <button class="popup__button-close" id="popup-close-info" type="button"></button>
+      <img src="" class="popup__place-img">
+      <p class="popup__place-title"></p>
     </div>
   </div>
   <script src="./scripts/index.js"></script>
