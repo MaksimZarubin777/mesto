@@ -21,7 +21,7 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__place-img/popup__place-img.css);
 @import url(../blocks/popup/__place-title/popup__place-title.css);
-@import url(../blocks/popup/__container/_place/popup__container_place.css);
+@import url(../blocks/popup/__container-place/popup__container_place.css);
 @import url(../blocks/popup/_place/popup_place.css);
 
 /* Header */
