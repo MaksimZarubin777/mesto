@@ -1,32 +1,4 @@
-// Блок с карточками
-// 
-// Список карточек
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
+import {initialCards} from './initialCards.js';
 
 // Переменные для Popup "Редактировать профиль"
 const popupProfileOpenButton = document.querySelector('.profile__button-edit');
@@ -37,6 +9,7 @@ const myName = document.querySelector('.profile__text-title');
 const myJob = document.querySelector('.profile__text-subtitle');
 const popupProfileCloseButton = document.querySelector('.popup__button-close');
 const formElementProfile = document.querySelector('#change-info');
+
 
 
 // Переменные для Popup "Добавить карточку"
@@ -54,9 +27,14 @@ const formElementPlace = document.querySelector('#new-place');
 const popupPlaceInfo = document.querySelector('#popup-place-info');
 const popupPlaceInfoCloseButton = document.querySelector('#popup-close-info');
 
+// Константа кнопки эскейп
+const ESC_CODE = 'Escape'
+
 // Открыть попап
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupWithEsc);
+  document.addEventListener('click', closePopupWithOverlay);
 }
 
 // Очистка полей ошибки при закрытии
@@ -74,7 +52,26 @@ const clearPopupErrorMessage = (popup) => {
 // Закрыть попап
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
-  clearPopupErrorMessage(popup);
+  document.removeEventListener('keydown', closePopupWithEsc);
+}
+
+// Закрыть попап эскейпом
+const closePopupWithEsc = (e) => {
+  if (e.key === ESC_CODE) { // а почему мы тут используем глобальный ESC_CODE? почему нельзя оставить === 'Escape'?
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup)
+    clearPopupErrorMessage(openedPopup);
+  }
+}
+
+// Закрыть попап черезе оверлей
+const closePopupWithOverlay = (e) => {
+  const classList = [...e.target.classList];
+  const openedPopup = document.querySelector('.popup_opened');
+  if (classList.includes('popup_opened')) {
+    closePopup(openedPopup);
+    clearPopupErrorMessage(openedPopup);
+  }
 }
 
 // Редактирование профиля
@@ -89,27 +86,7 @@ const openPopupProfile = () => {
 // Закрыть Popup профиля
 const closePopupProfile = () => {
   closePopup(popupProfile);
-  closePopupProfileWithBackground();
-}
-
-// закрыть попап профиля через эскейп
-const closePopupProfileWithEsc = () => {
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popupProfile);
-    };
-  });
-}
-
-// закрыть попап профиля через бекграунд
-const closePopupProfileWithBackground = () => {
-  document.addEventListener('click', function(evt){
-    const classList = Array.from(evt.target.classList);
-    const isPopupOpened = classList.includes('popup_opened');
-    if (isPopupOpened) {
-      closePopup(popupProfile);
-    };
-  });
+  clearPopupErrorMessage(popupProfile);
 }
 
 // Сохранить изменения профиля
@@ -129,31 +106,15 @@ const openPopupPlace = () => {
   openPopup(popupPlace)
   placeName.value = '';
   placeImg.value = '';
+  const submitButton = popupPlace.querySelector('.popup__button-submit');
+  submitButton.disabled = 'disabled';
+  submitButton.classList.add('popup__button-submit_blocked');
 }
 
 // Закрыть Popup "Добавить карточку"
 const closePopupPlace = () => {
   closePopup(popupPlace);
-}
-
-// Закрыть Popup "Добавить карточку" через эскейп
-const closePopupPlaceWithEsc = () => {
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popupPlace);
-    };
-  });
-}
-
-// Закрыть Popup "Добавить карточку" через бэкграунд
-const closePopupPlaceWithBackground = () => {
-  document.addEventListener('click', function(evt){
-    const classList = Array.from(evt.target.classList);
-    const isPopupOpened = classList.includes('popup_opened');
-    if (isPopupOpened) {
-      closePopup(popupPlace);
-    }; 
-  });
+  clearPopupErrorMessage(popupPlace);
 }
 
 // Создать карточку
@@ -209,26 +170,6 @@ const closePopupPlaceInfo = () => {
   closePopup(popupPlaceInfo);
 }
 
-// Закрыть Popup с картинкой через эскейп
-const closePopupPlaceInfoWithEsc = () => {
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popupPlaceInfo);
-    };
-  });
-}
-
-// Закрыть Popup с картинкой через бэкграунд
-const closePopupPlaceInfoWithBackground = () => {
-  document.addEventListener('click', function(evt){
-    const classList = Array.from(evt.target.classList);
-    const isPopupOpened = classList.includes('popup_opened');
-    if (isPopupOpened) {
-      closePopup(popupPlaceInfo);
-    };
-  });
-}
-
 // Отображение карточек из InitialCards
 initialCards.forEach(function(item) {
   cardsContainer.append(createCard(item));
@@ -237,15 +178,12 @@ initialCards.forEach(function(item) {
 
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
 popupProfileCloseButton.addEventListener('click', closePopupProfile);
-document.addEventListener('keydown', closePopupProfileWithEsc);
-closePopupProfileWithBackground();
 formElementProfile.addEventListener('submit', formSubmitHandler); 
 popupPlaceOpenButton.addEventListener('click', openPopupPlace);
 popupPlaceCloseButton.addEventListener('click', closePopupPlace);
-document.addEventListener('keydown', closePopupPlaceWithEsc);
-closePopupPlaceWithBackground();
 formElementPlace.addEventListener('submit', addNewCard);
 popupPlaceInfoCloseButton.addEventListener('click', closePopupPlaceInfo);
-document.addEventListener('keydown', closePopupPlaceInfoWithEsc);
-closePopupPlaceInfoWithBackground();
+
+
+
 

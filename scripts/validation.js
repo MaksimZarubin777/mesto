@@ -1,7 +1,3 @@
-// Находим все инпуты и формы на странице
-const inputsList = [...document.querySelectorAll('.popup__input')];
-const formsList = [...document.querySelectorAll('form')];
-
 // проверяем валидность инпута и показываем ошибки при необходимости
 const inputValidity = (input, settings) => {
   const errorMessage = document.querySelector(`#${input.id}-text-error`); // находим спан куда записать текст ошибки
