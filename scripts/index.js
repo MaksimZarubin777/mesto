@@ -36,7 +36,8 @@ const profileJob = document.querySelector('#profile-job');
 const myName = document.querySelector('.profile__text-title');
 const myJob = document.querySelector('.profile__text-subtitle');
 const popupProfileCloseButton = document.querySelector('.popup__button-close');
-const formElement = document.querySelector('#change-info');
+const formElementProfile = document.querySelector('#change-info');
+
 
 // Переменные для Popup "Добавить карточку"
 const cardsContainer = document.querySelector('.elements');
@@ -58,16 +59,29 @@ const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 }
 
+// Очистка полей ошибки при закрытии
+const clearPopupErrorMessage = (popup) => {
+  const popupInputs = [...popup.querySelectorAll('.popup__input')];
+  const popupSpans = [...popup.querySelectorAll('.popup__input-error')];
+  popupInputs.forEach((input) => {
+    input.classList.remove('popup__input_type_error');
+  });
+  popupSpans.forEach((input) => {
+    input.classList.remove('popup__input-error_active');
+  });
+}
+
 // Закрыть попап
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  clearPopupErrorMessage(popup);
 }
 
 // Редактирование профиля
 // 
 // Открыть Popup профиля
 const openPopupProfile = () => {
-  openPopup(popupProfile)
+  openPopup(popupProfile);
   profileName.value = myName.textContent; 
   profileJob.value = myJob.textContent;
 }
@@ -75,6 +89,27 @@ const openPopupProfile = () => {
 // Закрыть Popup профиля
 const closePopupProfile = () => {
   closePopup(popupProfile);
+  closePopupProfileWithBackground();
+}
+
+// закрыть попап профиля через эскейп
+const closePopupProfileWithEsc = () => {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popupProfile);
+    };
+  });
+}
+
+// закрыть попап профиля через бекграунд
+const closePopupProfileWithBackground = () => {
+  document.addEventListener('click', function(evt){
+    const classList = Array.from(evt.target.classList);
+    const isPopupOpened = classList.includes('popup_opened');
+    if (isPopupOpened) {
+      closePopup(popupProfile);
+    };
+  });
 }
 
 // Сохранить изменения профиля
@@ -84,7 +119,7 @@ const formSubmitHandler = (evt) => {
     const jobInputValue = profileJob.value;
     myName.textContent = nameInputValue;
     myJob.textContent = jobInputValue;
-    closePopupProfile();
+    closePopup(popupProfile);
 }
 
 // Добавить новое место
@@ -101,8 +136,28 @@ const closePopupPlace = () => {
   closePopup(popupPlace);
 }
 
+// Закрыть Popup "Добавить карточку" через эскейп
+const closePopupPlaceWithEsc = () => {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popupPlace);
+    };
+  });
+}
+
+// Закрыть Popup "Добавить карточку" через бэкграунд
+const closePopupPlaceWithBackground = () => {
+  document.addEventListener('click', function(evt){
+    const classList = Array.from(evt.target.classList);
+    const isPopupOpened = classList.includes('popup_opened');
+    if (isPopupOpened) {
+      closePopup(popupPlace);
+    }; 
+  });
+}
+
 // Создать карточку
-createCard = (item) => {
+const createCard = (item) => {
   const card = cardTemplate.content.cloneNode(true);
   card.querySelector('.card__title').textContent = item.name;
   const cardImage = card.querySelector('.card__img');
@@ -125,7 +180,7 @@ const addNewCard = (evt) => {
       link: placeImg.value
     };
   cardsContainer.prepend(createCard(newCardNameAndLink));
-  closePopupPlace();
+  closePopup(popupPlace);
 }
 
 // Переключение лайка
@@ -154,15 +209,43 @@ const closePopupPlaceInfo = () => {
   closePopup(popupPlaceInfo);
 }
 
+// Закрыть Popup с картинкой через эскейп
+const closePopupPlaceInfoWithEsc = () => {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popupPlaceInfo);
+    };
+  });
+}
+
+// Закрыть Popup с картинкой через бэкграунд
+const closePopupPlaceInfoWithBackground = () => {
+  document.addEventListener('click', function(evt){
+    const classList = Array.from(evt.target.classList);
+    const isPopupOpened = classList.includes('popup_opened');
+    if (isPopupOpened) {
+      closePopup(popupPlaceInfo);
+    };
+  });
+}
+
 // Отображение карточек из InitialCards
 initialCards.forEach(function(item) {
   cardsContainer.append(createCard(item));
 })
 
+
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
 popupProfileCloseButton.addEventListener('click', closePopupProfile);
-formElement.addEventListener('submit', formSubmitHandler); 
+document.addEventListener('keydown', closePopupProfileWithEsc);
+closePopupProfileWithBackground();
+formElementProfile.addEventListener('submit', formSubmitHandler); 
 popupPlaceOpenButton.addEventListener('click', openPopupPlace);
 popupPlaceCloseButton.addEventListener('click', closePopupPlace);
+document.addEventListener('keydown', closePopupPlaceWithEsc);
+closePopupPlaceWithBackground();
 formElementPlace.addEventListener('submit', addNewCard);
 popupPlaceInfoCloseButton.addEventListener('click', closePopupPlaceInfo);
+document.addEventListener('keydown', closePopupPlaceInfoWithEsc);
+closePopupPlaceInfoWithBackground();
+

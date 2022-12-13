@@ -47,10 +47,12 @@
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form id="change-info" name="change-info-popup">
-        <input id="profile-name" name="profile-name" placeholder="Ваше имя" type="text" value="" class="popup__input">
-        <input id="profile-job" name="profile-job" placeholder="Расскажите о себе" type="text" value=""
-          class="popup__input">
+      <form id="change-info" name="form" novalidate>
+        <input id="profile-name" name="form-input" placeholder="Ваше имя" type="text" value="" class="popup__input" required minlength="2" maxlength="20">
+        <span class="popup__input-error" id="profile-name-text-error"></span>
+        <input id="profile-job" name="form-input" placeholder="Расскажите о себе" type="text" value=""
+          class="popup__input" required minlength="2" maxlength="200">
+          <span class="popup__input-error" id="profile-job-text-error"></span>
         <button type='submit' class="popup__button-submit">Сохранить</button>
       </form>
     </div>
@@ -59,11 +61,13 @@
     <div class="popup__container">
       <button class="popup__button-close" id="popup-close" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form id="new-place" name="new-place-popup">
-        <input id="place-name" name="place-name" placeholder="Название" type="text" value="" class="popup__input">
-        <input id="place-img" name="place-img" placeholder="Ссылка на картинку" type="text" value=""
-          class="popup__input">
-        <button type='submit' id="create-btn" class="popup__button-submit">Создать</button>
+      <form id="new-place" name="form">
+        <input id="place-name" name="form-input" placeholder="Название" type="text" value="" class="popup__input" required minlength="2" maxlength="200">
+        <span class="popup__input-error" id="place-name-text-error"></span>
+        <input id="place-img" name="form-input" placeholder="Ссылка на картинку" type="url" value=""
+          class="popup__input" required>
+        <span class="popup__input-error" id="place-img-text-error"></span>
+        <button type='submit' id="create-btn" class="popup__button-submit popup__button-submit_blocked">Создать</button>
       </form>
     </div>
   </div>
@@ -75,6 +79,6 @@
     </div>
   </div>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validation.js"></script>
 </body>
-
 </html>
