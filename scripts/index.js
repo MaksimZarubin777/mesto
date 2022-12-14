@@ -53,14 +53,14 @@ const clearPopupErrorMessage = (popup) => {
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupWithEsc);
+  document.removeEventListener('click', closePopupWithOverlay);
 }
 
 // Закрыть попап эскейпом
 const closePopupWithEsc = (e) => {
-  if (e.key === ESC_CODE) { // а почему мы тут используем глобальный ESC_CODE? почему нельзя оставить === 'Escape'?
+  if (e.key === ESC_CODE) { // Спасибо!
     const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup)
-    clearPopupErrorMessage(openedPopup);
+    closePopup(openedPopup);
   }
 }
 
@@ -70,7 +70,6 @@ const closePopupWithOverlay = (e) => {
   const openedPopup = document.querySelector('.popup_opened');
   if (classList.includes('popup_opened')) {
     closePopup(openedPopup);
-    clearPopupErrorMessage(openedPopup);
   }
 }
 
