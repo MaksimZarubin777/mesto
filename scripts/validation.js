@@ -1,43 +1,43 @@
 class FormValidator {
   constructor(settings, formElement) {
-    this.formSelector = settings.formSelector;
-    this.inputSelector = settings.inputSelector;
-    this.submitButtonSelector = settings.submitButtonSelector;
-    this.inactiveButtonClass = settings.inactiveButtonClass;
-    this.inputErrorClass = settings.inputErrorClass;
-    this.errorClass = settings.errorClass;
-    this.form = formElement;
+    this._formSelector = settings.formSelector;
+    this._inputSelector = settings.inputSelector;
+    this._submitButtonSelector = settings.submitButtonSelector;
+    this._inactiveButtonClass = settings.inactiveButtonClass;
+    this._inputErrorClass = settings.inputErrorClass;
+    this._errorClass = settings.errorClass;
+    this._form = formElement;
   }
 
   _toggleSubmitButton  (inputsList, buttonSubmit) {
     const isFormValid = inputsList.every(input => input.validity.valid); // вернет тру или фолс
         if (isFormValid) { //если форма валидна, то делаем кнопку активной и наоборот
-          buttonSubmit.classList.remove(this.inactiveButtonClass);
+          buttonSubmit.classList.remove(this._inactiveButtonClass);
           buttonSubmit.disabled = '';
         } else {
-          buttonSubmit.classList.add(this.inactiveButtonClass);
+          buttonSubmit.classList.add(this._inactiveButtonClass);
           buttonSubmit.disabled = 'disabled';
         }
   }
 
   _inputValidity (input) {
-    const errorMessage = this.form.querySelector(`#${input.id}-text-error`);
+    const errorMessage = this._form.querySelector(`#${input.id}-text-error`);
     if (input.validity.valid) { //если инпут валиден, то удаляем ошибку и красную линию
-      errorMessage.classList.remove(this.errorClass);
-      input.classList.remove(this.inputErrorClass);
+      errorMessage.classList.remove(this._errorClass);
+      input.classList.remove(this._inputErrorClass);
     } else { //если невалиден, то добавляем ошибку и красную линию
       errorMessage.textContent = input.validationMessage;
-      errorMessage.classList.add(this.errorClass);
-      input.classList.add(this.inputErrorClass);
+      errorMessage.classList.add(this._errorClass);
+      input.classList.add(this._inputErrorClass);
     }
   }
 
   enableValidation () {
-    const formsList = [...document.querySelectorAll(this.formSelector)];
+    const formsList = [...document.querySelectorAll(this._formSelector)];
     // проходим по всем формам
     formsList.forEach(form => {
-      const inputsList = [...form.querySelectorAll(this.inputSelector)];
-      const buttonSubmit = form.querySelector(this.submitButtonSelector);
+      const inputsList = [...form.querySelectorAll(this._inputSelector)];
+      const buttonSubmit = form.querySelector(this._submitButtonSelector);
 
       form.addEventListener('submit', (evt) => {
         evt.preventDefault()

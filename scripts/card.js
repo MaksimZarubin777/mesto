@@ -3,8 +3,8 @@ import {openPopup, popupPlaceInfo} from './index.js';
 
 export class Card {
   constructor(name, link) {
-    this.name = name;
-    this.link = link
+    this._name = name;
+    this._link = link
   }
 
   _getTemplate () {
@@ -18,8 +18,8 @@ export class Card {
 
   generateCard () {
     this._element = this._getTemplate();
-    this._element.querySelector('.card__img').src = this.link;
-    this._element.querySelector('.card__title').textContent = this.name;
+    this._element.querySelector('.card__img').src = this._link;
+    this._element.querySelector('.card__title').textContent = this._name;
     this._setEventListeners();
     return this._element;
   }
@@ -34,8 +34,8 @@ export class Card {
 
   _openCardImage () {
     openPopup(popupPlaceInfo);
-    popupPlaceInfo.querySelector('.popup__place-title').textContent = this.name;
-    popupPlaceInfo.querySelector('.popup__place-img').src = this.link;
+    popupPlaceInfo.querySelector('.popup__place-title').textContent = this._name;
+    popupPlaceInfo.querySelector('.popup__place-img').src = this._link;
   }
 
   _setEventListeners () {
