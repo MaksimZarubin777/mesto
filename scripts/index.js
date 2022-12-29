@@ -1,4 +1,6 @@
 import {initialCards} from './initialCards.js';
+import {Card} from './card.js';
+import {settings} from './settings.js';
 
 // Переменные для Popup "Редактировать профиль"
 const popupProfileOpenButton = document.querySelector('.profile__button-edit');
@@ -10,11 +12,7 @@ const myJob = document.querySelector('.profile__text-subtitle');
 const popupProfileCloseButton = document.querySelector('.popup__button-close');
 const formElementProfile = document.querySelector('#change-info');
 
-
-
 // Переменные для Popup "Добавить карточку"
-const cardsContainer = document.querySelector('.elements');
-const cardTemplate = document.querySelector('#card');
 const popupPlace = document.querySelector('#popup-place');
 const popupPlaceOpenButton = document.querySelector('.profile__button-add'); 
 const popupPlaceCloseButton = document.querySelector('#popup-close');
@@ -22,16 +20,15 @@ const placeName = document.querySelector('#place-name');
 const placeImg = document.querySelector('#place-img');
 const formElementPlace = document.querySelector('#new-place');
 
-
 // Переменные для Popup с картинкой места
-const popupPlaceInfo = document.querySelector('#popup-place-info');
+export const popupPlaceInfo = document.querySelector('#popup-place-info');
 const popupPlaceInfoCloseButton = document.querySelector('#popup-close-info');
 
 // Константа кнопки эскейп
-const ESC_CODE = 'Escape'
+const ESC_CODE = 'Escape';
 
 // Открыть попап
-const openPopup = (popup) => {
+export const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEsc);
   document.addEventListener('click', closePopupWithOverlay);
@@ -58,7 +55,7 @@ const closePopup = (popup) => {
 
 // Закрыть попап эскейпом
 const closePopupWithEsc = (e) => {
-  if (e.key === ESC_CODE) { // Спасибо!
+  if (e.key === ESC_CODE) { 
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
@@ -116,21 +113,6 @@ const closePopupPlace = () => {
   clearPopupErrorMessage(popupPlace);
 }
 
-// Создать карточку
-const createCard = (item) => {
-  const card = cardTemplate.content.cloneNode(true);
-  card.querySelector('.card__title').textContent = item.name;
-  const cardImage = card.querySelector('.card__img');
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
-  const likeBtn = card.querySelector('.card__heart');
-  const deleteBtn = card.querySelector('.card__trash');
-  likeBtn.addEventListener('click', likeClick);
-  deleteBtn.addEventListener('click', deleteClick);
-  card.querySelector('.card__img').addEventListener('click', openPopupPlaceInfo);
-  return card;
-}
-
 // Добавить новую карточку
 const addNewCard = (evt) => {
   evt.preventDefault(); 
@@ -139,41 +121,31 @@ const addNewCard = (evt) => {
       name: placeName.value,
       link: placeImg.value
     };
-  cardsContainer.prepend(createCard(newCardNameAndLink));
+  const card = new Card (newCardNameAndLink.name, newCardNameAndLink.link);
+  const cardElement = card.generateCard();
+  document.querySelector('.elements').prepend(cardElement);
   closePopup(popupPlace);
 }
 
-// Переключение лайка
-const likeClick = (e) => {
-  e.target.classList.toggle('card__heart_active');
-  }
+// создание карточек через класс
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link);
+  const cardElement = card.generateCard();
+  document.querySelector('.elements').append(cardElement);
+})
 
-// Удаление карточки
-const deleteClick = (e) => {
-  e.target.closest('.card').remove();
-}
+// валидация карточек через класс
+const popupProfileValidation = new FormValidator(settings, popupProfile);
+const popupAddCardValidation = new FormValidator(settings, popupPlace);
+popupProfileValidation.enableValidation();
+popupAddCardValidation.enableValidation();
 
-// Popup с картинкой
-// 
-// Открыть Popup с картинкой
-const openPopupPlaceInfo = (e) => {
-  openPopup(popupPlaceInfo);
-  popupPlaceInfo.querySelector('.popup__place-title').textContent = e.target.closest('.card').querySelector('.card__title').textContent;
-  const popupPlaceImage = popupPlaceInfo.querySelector('.popup__place-img');
-  popupPlaceImage.src = e.target.closest('.card').querySelector('.card__img').src;
-  popupPlaceImage.alt = e.target.closest('.card').querySelector('.card__title').textContent;
-}
+
 
 // Закрыть Popup с картинкой
 const closePopupPlaceInfo = () => {
   closePopup(popupPlaceInfo);
 }
-
-// Отображение карточек из InitialCards
-initialCards.forEach(function(item) {
-  cardsContainer.append(createCard(item));
-})
-
 
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
 popupProfileCloseButton.addEventListener('click', closePopupProfile);
@@ -182,7 +154,3 @@ popupPlaceOpenButton.addEventListener('click', openPopupPlace);
 popupPlaceCloseButton.addEventListener('click', closePopupPlace);
 formElementPlace.addEventListener('submit', addNewCard);
 popupPlaceInfoCloseButton.addEventListener('click', closePopupPlaceInfo);
-
-
-
-
