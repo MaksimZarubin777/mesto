@@ -1,4 +1,4 @@
-import {Card} from './kard.js';
+import {Card} from './Card.js';
 import {settings, initialCards} from './constants.js';
 
 // Переменные для Popup "Редактировать профиль"
