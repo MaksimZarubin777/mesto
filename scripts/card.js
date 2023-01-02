@@ -2,14 +2,15 @@
 import {openPopup, popupPlaceInfo} from './index.js';
 
 export class Card {
-  constructor(name, link) {
+  constructor(name, link, templateSelector) {
     this._name = name;
-    this._link = link
+    this._link = link;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate () {
     const cardElement = document
-    .querySelector('#card')
+    .querySelector(this._templateSelector)
     .content
     .querySelector('.card')
     .cloneNode(true);
@@ -36,6 +37,7 @@ export class Card {
     openPopup(popupPlaceInfo);
     popupPlaceInfo.querySelector('.popup__place-title').textContent = this._name;
     popupPlaceInfo.querySelector('.popup__place-img').src = this._link;
+    popupPlaceInfo.querySelector('.popup__place-img').alt = this._name;
   }
 
   _setEventListeners () {

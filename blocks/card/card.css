@@ -2,8 +2,9 @@
   border-radius: 10px;
   width: 100%;
   background-color: #fff;
-  padding-bottom: 9%;
+  padding-bottom: 31px;
   position: relative;
   display: flex;
   flex-direction: column;
+  max-width: 282px;
 }

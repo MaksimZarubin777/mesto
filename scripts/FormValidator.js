@@ -7,7 +7,7 @@ class FormValidator {
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
     this._form = formElement;
-  }
+  };
 
   _toggleSubmitButton  (inputsList, buttonSubmit) {
     const isFormValid = inputsList.every(input => input.validity.valid); // вернет тру или фолс
@@ -22,6 +22,8 @@ class FormValidator {
 
   _inputValidity (input) {
     const errorMessage = this._form.querySelector(`#${input.id}-text-error`);
+    const buttonClose = this._form.querySelector('.popup__button-close');
+
     if (input.validity.valid) { //если инпут валиден, то удаляем ошибку и красную линию
       errorMessage.classList.remove(this._errorClass);
       input.classList.remove(this._inputErrorClass);
@@ -29,11 +31,18 @@ class FormValidator {
       errorMessage.textContent = input.validationMessage;
       errorMessage.classList.add(this._errorClass);
       input.classList.add(this._inputErrorClass);
-    }
-  }
+    } 
+
+    // очистка текста ошибки при закрытии 
+    buttonClose.addEventListener('click', () => {
+      input.classList.remove(this._inputErrorClass);
+      errorMessage.classList.remove(this._errorClass);
+    })
+  };
 
   enableValidation () {
     const formsList = [...document.querySelectorAll(this._formSelector)];
+
     // проходим по всем формам
     formsList.forEach(form => {
       const inputsList = [...form.querySelectorAll(this._inputSelector)];
@@ -42,6 +51,7 @@ class FormValidator {
       form.addEventListener('submit', (evt) => {
         evt.preventDefault()
       })
+
       //  проходим по всем инпутам в форме
       inputsList.forEach(input => {
         input.addEventListener('input', () => {
@@ -51,4 +61,4 @@ class FormValidator {
       });
     });
   };
-}
+};

@@ -1,6 +1,5 @@
-import {initialCards} from './initialCards.js';
 import {Card} from './Card.js';
-import {settings} from './settings.js';
+import {settings, initialCards} from './constants.js';
 
 // Переменные для Popup "Редактировать профиль"
 const popupProfileOpenButton = document.querySelector('.profile__button-edit');
@@ -31,19 +30,7 @@ const ESC_CODE = 'Escape';
 export const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEsc);
-  document.addEventListener('click', closePopupWithOverlay);
-}
-
-// Очистка полей ошибки при закрытии
-const clearPopupErrorMessage = (popup) => {
-  const popupInputs = [...popup.querySelectorAll('.popup__input')];
-  const popupSpans = [...popup.querySelectorAll('.popup__input-error')];
-  popupInputs.forEach((input) => {
-    input.classList.remove('popup__input_type_error');
-  });
-  popupSpans.forEach((input) => {
-    input.classList.remove('popup__input-error_active');
-  });
+  popup.addEventListener('click', closePopupWithOverlay);
 }
 
 // Закрыть попап
@@ -79,14 +66,8 @@ const openPopupProfile = () => {
   profileJob.value = myJob.textContent;
 }
 
-// Закрыть Popup профиля
-const closePopupProfile = () => {
-  closePopup(popupProfile);
-  clearPopupErrorMessage(popupProfile);
-}
-
 // Сохранить изменения профиля
-const formSubmitHandler = (evt) => {
+const profileSubmitHandle = (evt) => {
     evt.preventDefault(); 
     const nameInputValue = profileName.value;
     const jobInputValue = profileJob.value;
@@ -99,18 +80,11 @@ const formSubmitHandler = (evt) => {
 // 
 // Открыть Popup "Добавить карточку"
 const openPopupPlace = () => {
-  openPopup(popupPlace)
-  placeName.value = '';
-  placeImg.value = '';
+  openPopup(popupPlace);
+  formElementPlace.reset();
   const submitButton = popupPlace.querySelector('.popup__button-submit');
   submitButton.disabled = 'disabled';
   submitButton.classList.add('popup__button-submit_blocked');
-}
-
-// Закрыть Popup "Добавить карточку"
-const closePopupPlace = () => {
-  closePopup(popupPlace);
-  clearPopupErrorMessage(popupPlace);
 }
 
 // Добавить новую карточку
@@ -121,7 +95,7 @@ const addNewCard = (evt) => {
       name: placeName.value,
       link: placeImg.value
     };
-  const card = new Card (newCardNameAndLink.name, newCardNameAndLink.link);
+  const card = new Card (newCardNameAndLink.name, newCardNameAndLink.link, '#card');
   const cardElement = card.generateCard();
   document.querySelector('.elements').prepend(cardElement);
   closePopup(popupPlace);
@@ -129,7 +103,7 @@ const addNewCard = (evt) => {
 
 // создание карточек через класс
 initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link);
+  const card = new Card(item.name, item.link, '#card');
   const cardElement = card.generateCard();
   document.querySelector('.elements').append(cardElement);
 })
@@ -140,17 +114,10 @@ const popupAddCardValidation = new FormValidator(settings, popupPlace);
 popupProfileValidation.enableValidation();
 popupAddCardValidation.enableValidation();
 
-
-
-// Закрыть Popup с картинкой
-const closePopupPlaceInfo = () => {
-  closePopup(popupPlaceInfo);
-}
-
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
-popupProfileCloseButton.addEventListener('click', closePopupProfile);
-formElementProfile.addEventListener('submit', formSubmitHandler); 
+popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile));
+formElementProfile.addEventListener('submit', profileSubmitHandle); 
 popupPlaceOpenButton.addEventListener('click', openPopupPlace);
-popupPlaceCloseButton.addEventListener('click', closePopupPlace);
+popupPlaceCloseButton.addEventListener('click', () => closePopup(popupPlace));
 formElementPlace.addEventListener('submit', addNewCard);
-popupPlaceInfoCloseButton.addEventListener('click', closePopupPlaceInfo);
+popupPlaceInfoCloseButton.addEventListener('click', () => closePopup(popupPlaceInfo));
