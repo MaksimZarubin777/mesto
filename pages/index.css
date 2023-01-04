@@ -5,6 +5,9 @@
 /* Fonts */
 @import url(../vendor/fonts/fonts.css);
 
+/* Body */
+@import url(../blocks/body/body.css);
+
 /* Page */
 @import url(../blocks/page/page.css);
 
