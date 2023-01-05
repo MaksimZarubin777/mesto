@@ -1,3 +1,4 @@
 .popup__button-submit_blocked {
   opacity: .2;
+  cursor: default;
 }
