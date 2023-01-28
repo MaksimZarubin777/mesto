@@ -1,11 +1,9 @@
-
-import {openPopup, popupPlaceInfo} from './index.js';
-
-export class Card {
-  constructor(name, link, templateSelector) {
+export default class Card {
+  constructor(name, link, templateSelector, handle) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._handle = handle;
   }
 
   _getTemplate () {
@@ -34,13 +32,6 @@ export class Card {
     this._element.querySelector('.card__trash').closest('.card').remove();
   }
 
-  _openCardImage () {
-    openPopup(popupPlaceInfo);
-    popupPlaceInfo.querySelector('.popup__place-title').textContent = this._name;
-    popupPlaceInfo.querySelector('.popup__place-img').src = this._link;
-    popupPlaceInfo.querySelector('.popup__place-img').alt = this._name;
-  }
-
   _setEventListeners () {
     this._element.querySelector('.card__heart').addEventListener('click', () => {
       this._likeClick();
@@ -49,7 +40,7 @@ export class Card {
       this._deleteClick();
     })
     this._element.querySelector('.card__img').addEventListener('click', () => {
-      this._openCardImage();
+      this._handle(this._name, this._link);
     })
   };
 }
