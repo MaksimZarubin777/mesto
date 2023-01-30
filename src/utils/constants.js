@@ -8,19 +8,6 @@ export const settings = {
   errorClass: 'popup__input-error_active',
 };
 
-// Переменные для Popup "Редактировать профиль"
-export const popupProfileOpenButton = document.querySelector('.profile__button-edit');
-export const popupProfile = document.querySelector('#popup-profile');
-export const profileName = document.querySelector('#profile-name'); 
-export const profileJob = document.querySelector('#profile-job');
-
-// Переменные для Popup "Добавить карточку"
-export const popupPlace = document.querySelector('#popup-place');
-export const popupPlaceOpenButton = document.querySelector('.profile__button-add'); 
-
-// Переменные для Popup с картинкой места
-export const popupPlaceInfo = document.querySelector('#popup-place-info');
-
 // Селектор для создания класса Section
 export const cardListSelector = '.elements';
 

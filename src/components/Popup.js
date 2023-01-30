@@ -1,8 +1,8 @@
-import { popupOpenSelector, ESC_CODE, popupCloseButtonSelector } from "../components/constants.js"; 
+import { popupOpenSelector, ESC_CODE, popupCloseButtonSelector } from "../utils/constants.js"; 
 
 export default class Popup {
   constructor (popupSelector) {
-    this._popupSelector = popupSelector;
+    this._popupSelector = document.querySelector(popupSelector);
   }
 
   open () {
