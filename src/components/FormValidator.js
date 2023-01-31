@@ -12,14 +12,14 @@ export default class FormValidator {
     this._buttonClose = this._form.querySelector('.popup__button-close');
   };
 
-  _toggleSubmitButton  (inputsList, buttonSubmit) {
-    const isFormValid = inputsList.every(input => input.validity.valid); // вернет тру или фолс
+  _toggleSubmitButton  () {
+    const isFormValid = this._inputsList.every(input => input.validity.valid); // вернет тру или фолс
         if (isFormValid) { //если форма валидна, то делаем кнопку активной и наоборот
-          buttonSubmit.classList.remove(this._inactiveButtonClass);
-          buttonSubmit.disabled = '';
+          this._buttonSubmit.classList.remove(this._inactiveButtonClass);
+          this._buttonSubmit.disabled = '';
         } else {
-          buttonSubmit.classList.add(this._inactiveButtonClass);
-          buttonSubmit.disabled = 'disabled';
+          this._buttonSubmit.classList.add(this._inactiveButtonClass);
+          this._buttonSubmit.disabled = 'disabled';
         }
   }
 
@@ -32,12 +32,6 @@ export default class FormValidator {
       this._errorMessage.classList.add(this._errorClass);
       input.classList.add(this._inputErrorClass);
     } 
-
-    // очистка текста ошибки при закрытии 
-    // this._buttonClose.addEventListener('click', () => {
-    //   // input.classList.remove(this._inputErrorClass);
-    //   // this._errorMessage.classList.remove(this._errorClass);
-    // })
   };
 
 // Очистка сообщений об ошибке
@@ -51,35 +45,15 @@ export default class FormValidator {
     this._inputsList.forEach(input => {
       input.addEventListener('input', () => {
         this._inputValidity(input); // проверяем валидность инпута
-        this._toggleSubmitButton(this._inputsList, this._buttonSubmit); // проверяем активна или неактивна должна быть кнопка
+        this._toggleSubmitButton(); // проверяем активна или неактивна должна быть кнопка
       });
     });
-
-    
-
-    // проходим по всем формам
-    // formsList.forEach(form => {
-    //   const inputsList = [...form.querySelectorAll(this._inputSelector)];
-    //   const buttonSubmit = form.querySelector(this._submitButtonSelector);
-
-    //   form.addEventListener('submit', (evt) => {
-    //     evt.preventDefault()
-    //   })
-
-    //   //  проходим по всем инпутам в форме
-    //   inputsList.forEach(input => {
-    //     input.addEventListener('input', () => {
-    //       this._inputValidity(input); // проверяем валидность инпута
-    //       this._toggleSubmitButton(inputsList, buttonSubmit); // проверяем активна или неактивна должна быть кнопка
-    //     });
-    //   });
-    // });
   };
 
   resetValidation() {
     this._inputsList.forEach((input) => {
       this._hideInputError(input)
     })
-    this._toggleSubmitButton(this._inputsList, this._buttonSubmit)
+    this._toggleSubmitButton()
   } 
 };

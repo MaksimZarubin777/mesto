@@ -1,3 +1,12 @@
+// Павел, добрый день! Благодарю за ревью, ваши комментарии были очень полезны! 
+// Все замечания изложены в очень доступной форме, было интересно их читать и исправлять код. 
+// Надеюсь, что все ваши комментарии на этот раз я исправил верно) 
+// Тема с валидацией и классами оказалась довольно сложная для меня. Очень путает структура кода когда есть и класс и фунция, как например в defaultCardList. 
+// Когда параметры класса передаются в index.js, а cardItem определяется уже внутри класса...Все как-то скачет между документами)
+// Если у вас есть возможность поделиться каким-нибудь советом как это лучше понимать или какими-нибудь материалами - буду очень благодарен :) 
+// Спасибо! 
+
+
 import './index.css'
 import Card from '../components/Card.js';
 import {settings, initialCards, cardListSelector} from '../utils/constants.js';
@@ -29,7 +38,7 @@ const profileInfo = new UserInfo({profileNameSelector: '.profile__text-title', p
 // Сохранить изменения профиля
 const handleProfilFormSubmit = (evt, values) => {
   evt.preventDefault(); 
-  profileInfo.setUserInfo(values.name, values.description);
+  profileInfo.setUserInfo(values);
   handleProfilePopup.close();
 }
 
@@ -53,7 +62,8 @@ popupProfileOpenButton.addEventListener('click', openPopupProfile);
 // 
 // Функция создания карточки
 const generateCard = (card) => {
-  return card.generateCard();
+  const newCard = card.generateCard();
+  return defaultCardList.addItem(newCard)
 }
 
 // Добавить новую карточку
@@ -64,8 +74,8 @@ const addNewCard = (evt, values) => {
       name: values['form-input'],
       link: values.link
     };
-  const card = new Card (newCardNameAndLink, '#card');
-  defaultCardList.addItem(generateCard(card))
+  const card = new Card (newCardNameAndLink, '#card', handleCardClick);
+  generateCard(card)
   handlePlacePopup.close();
 }
 
@@ -90,7 +100,11 @@ popupWithImg.setEventListeners();
 // ОТРИСОВКА КАРТОЧЕК НА СТРАНИЦЕ
 // 
 // Создание класса SECTION
-const defaultCardList = new Section(cardListSelector);
+const defaultCardList = new Section({
+  renderer: (cardItem) => {
+  const card = new Card(cardItem, '#card', handleCardClick);
+  generateCard(card)
+}, },cardListSelector);
 
 // Клик по карточке открывает попап с картинкой карточки
 const handleCardClick = (name, src) => {
@@ -99,11 +113,7 @@ const handleCardClick = (name, src) => {
 
 // Отрисовка карточек на странице
 defaultCardList.renderItems({
-  data: initialCards,
-  renderer: (cardItem) => {
-    const card = new Card(cardItem, '#card', handleCardClick);
-    defaultCardList.addItem(generateCard(card));
-  }, 
+  data: initialCards
 });
 
 // Валидация карточек через класс
