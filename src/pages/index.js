@@ -1,10 +1,4 @@
-// Павел, добрый день! Благодарю за ревью, ваши комментарии были очень полезны! 
-// Все замечания изложены в очень доступной форме, было интересно их читать и исправлять код. 
-// Надеюсь, что все ваши комментарии на этот раз я исправил верно) 
-// Тема с валидацией и классами оказалась довольно сложная для меня. Очень путает структура кода когда есть и класс и фунция, как например в defaultCardList. 
-// Когда параметры класса передаются в index.js, а cardItem определяется уже внутри класса...Все как-то скачет между документами)
-// Если у вас есть возможность поделиться каким-нибудь советом как это лучше понимать или какими-нибудь материалами - буду очень благодарен :) 
-// Спасибо! 
+// Благодарю, что уделили время для ответов!
 
 
 import './index.css'
@@ -61,9 +55,10 @@ popupProfileOpenButton.addEventListener('click', openPopupProfile);
 // ПОПАП НОВАЯ КАРТОЧКА
 // 
 // Функция создания карточки
-const generateCard = (card) => {
-  const newCard = card.generateCard();
-  return defaultCardList.addItem(newCard)
+const generateCard = (cardData) => {
+  const card = new Card (cardData, '#card', handleCardClick) 
+  const cardElement = card.generateCard()
+  return cardElement
 }
 
 // Добавить новую карточку
@@ -74,8 +69,8 @@ const addNewCard = (evt, values) => {
       name: values['form-input'],
       link: values.link
     };
-  const card = new Card (newCardNameAndLink, '#card', handleCardClick);
-  generateCard(card)
+  const cardElement = generateCard(newCardNameAndLink)
+  defaultCardList.addItem(cardElement);
   handlePlacePopup.close();
 }
 
@@ -101,10 +96,11 @@ popupWithImg.setEventListeners();
 // 
 // Создание класса SECTION
 const defaultCardList = new Section({
-  renderer: (cardItem) => {
-  const card = new Card(cardItem, '#card', handleCardClick);
-  generateCard(card)
-}, },cardListSelector);
+  renderer: (cardData) => {
+    const cardElement = generateCard(cardData)
+    defaultCardList.addItem(cardElement) 
+  }
+},cardListSelector);
 
 // Клик по карточке открывает попап с картинкой карточки
 const handleCardClick = (name, src) => {

@@ -20,8 +20,7 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners () {
     super.setEventListeners();
-    this._form.addEventListener('submit', (evt) => this._handleSubmit(evt, this._getInputValues())); //не очень понял, где лучше вывать evt.preventDefault(). 
-    // Если передать evt в setEventLissteners и вызвать evt.preventDefault(), исправив при этом index.js, то была ошибка
+    this._form.addEventListener('submit', (evt) => this._handleSubmit(evt, this._getInputValues())); 
   }
 
   close () {
