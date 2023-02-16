@@ -87,7 +87,7 @@
     <!-- POPUP PLACE -->
   <div class="popup" id="popup-place">
     <div class="popup__container">
-      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <button class="popup__button-close" id="-confirm" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
       <form id="new-place" name="form-place-add-new" novalidate>
         <input 
@@ -118,7 +118,7 @@
   <!-- POPUP CONFIRMATION -->
   <div class="popup" id="popup-confirmation">
     <div class="popup__container">
-      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <button class="popup__button-close" id="popup-close-confirm" type="button"></button>
       <h2 class="popup__title">Вы уверены?</h2>
       <form id="delete-confirmation" novalidate>
         <button type='submit' id="confirm-btn" class="popup__button-submit popup__button-submit_confirmation">Да</button>
@@ -129,7 +129,7 @@
   <!-- POPUP AVATAR -->
   <div class="popup" id="popup-update-avatar">
     <div class="popup__container">
-      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <button class="popup__button-close" id="popup-avatar" type="button"></button>
       <h2 class="popup__title">Обновить аватар</h2>
       <form id="update-avatar" name="update-avatar" novalidate>
         <input 
@@ -141,7 +141,7 @@
         class="popup__input" 
         required>
         <span class="popup__input-error" id="avatar-img-text-error"></span>
-        <button type='submit' id="confirm-btn" class="popup__button-submit popup__button-submit_blocked">Сохранить</button>
+        <button type='submit' id="avatar-btn" class="popup__button-submit popup__button-submit_blocked">Сохранить</button>
       </form>
     </div>
   </div>
@@ -149,7 +149,7 @@
   <!-- POPUP WITH IMG -->
   <div class="popup popup_place" id="popup-place-info">
     <div class="popup__container-place">
-      <button class="popup__button-close" id="popup-close-info" type="button"></button>
+      <button class="popup__button-close" id="popup-confirm-info" type="button"></button>
       <img src="#" class="popup__place-img" alt="">
       <p class="popup__place-title"></p>
     </div>
