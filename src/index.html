@@ -15,13 +15,16 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img src="<%=require('./images/Avatar.png')%>" class="profile__avatar" alt="Аватар">
+        <div class="profile__avatar-block">
+          <img src="#" class="profile__avatar" alt="Аватар">
+          <div src="#" class="profile__avatar_update" alt="Редактировать аватар"></div>
+        </div>
         <div class="profile__info">
           <div class="profile__title">
-            <h1 class="profile__text-title">Жак-Ив Кусто</h1>
+            <h1 class="profile__text-title"></h1>
             <button class="profile__button-edit" type="button"></button>
           </div>
-          <p class="profile__text-subtitle">Исследователь океана</p>
+          <p class="profile__text-subtitle"></p>
         </div>
         <button class="profile__button-add" type="button"></button>
       </section>
@@ -32,16 +35,23 @@
       <p class="footer__text">&copy; 2022 Mesto Russia</p>
     </footer>
   </div>
+
+  <!-- CARD TEMPLATE -->
   <template id="card">
     <article class="card">
       <button class="card__trash" type="button"></button>
       <img src="Null" alt="" class="card__img">
       <div class="card__info">
         <h2 class="card__title"></h2>
-        <button class="card__heart" type="button"></button>
+        <div class="card__like-block">
+          <button class="card__heart" type="button"></button>
+          <p class="card__like-counter"></p>
+        </div>
       </div>
     </article>
   </template>
+
+  <!-- POPUP PROFILE -->
   <div class="popup" id="popup-profile">
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
@@ -73,6 +83,8 @@
       </form>
     </div>
   </div>
+
+    <!-- POPUP PLACE -->
   <div class="popup" id="popup-place">
     <div class="popup__container">
       <button class="popup__button-close" id="popup-close" type="button"></button>
@@ -80,7 +92,7 @@
       <form id="new-place" name="form-place-add-new" novalidate>
         <input 
         id="place-name" 
-        name="form-input" 
+        name="formInput" 
         placeholder="Название" 
         type="text" 
         value="" 
@@ -102,6 +114,39 @@
       </form>
     </div>
   </div>
+  
+  <!-- POPUP CONFIRMATION -->
+  <div class="popup" id="popup-confirmation">
+    <div class="popup__container">
+      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form id="delete-confirmation" novalidate>
+        <button type='submit' id="confirm-btn" class="popup__button-submit popup__button-submit_confirmation">Да</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- POPUP AVATAR -->
+  <div class="popup" id="popup-update-avatar">
+    <div class="popup__container">
+      <button class="popup__button-close" id="popup-close" type="button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form id="update-avatar" name="update-avatar" novalidate>
+        <input 
+        id="avatar-img" 
+        name="link" 
+        placeholder="Ссылка на картинку" 
+        type="url" 
+        value=""
+        class="popup__input" 
+        required>
+        <span class="popup__input-error" id="avatar-img-text-error"></span>
+        <button type='submit' id="confirm-btn" class="popup__button-submit popup__button-submit_blocked">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- POPUP WITH IMG -->
   <div class="popup popup_place" id="popup-place-info">
     <div class="popup__container-place">
       <button class="popup__button-close" id="popup-close-info" type="button"></button>
