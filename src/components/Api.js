@@ -1,8 +1,15 @@
-class Api {
+export class Api {
   constructor(options) {
     this._options = options;
     this._baseurl = this._options.baseUrl;
     this._headers = this._options.headers;
+  }
+
+  _getResponseData (res) {
+    if (res.ok) {
+      return res.json()
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
   getProfileInfo() {
@@ -10,11 +17,8 @@ class Api {
       headers: this._headers
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    })  
   } 
 
   getInitialCard () {
@@ -22,11 +26,8 @@ class Api {
       headers: this._headers
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   handlePutLike (cardId) {
@@ -35,11 +36,8 @@ class Api {
       headers: this._headers
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   handleDeleteLike (cardId) {
@@ -48,11 +46,8 @@ class Api {
       headers: this._headers
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   updateProfileInfo (data) {
@@ -65,11 +60,8 @@ class Api {
       })
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   addNewCard (data) {
@@ -82,11 +74,8 @@ class Api {
       })
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   deleteCard (cardId) {
@@ -95,11 +84,8 @@ class Api {
       headers: this._headers,
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      return this._getResponseData(res)
+    }) 
   }
 
   avatarUpdate (inputResult) {
@@ -111,18 +97,8 @@ class Api {
       })
     })
     .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-  }
+      return this._getResponseData(res)
+    }) 
+  }  
 }
 
-export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
-  headers: {
-    authorization: '281df4cd-64fd-4e10-9c44-1157fa2ba97c',
-    'Content-Type': 'application/json'
-  }
-}); 

@@ -72,7 +72,8 @@ export default class Card {
   
   //Метод для удаления карточки из разметки  
   deleteCard () {
-    this._cardTrash.closest('.card').remove();
+    this._element.remove()
+    this._element = null;
   }
 
   _setEventListeners () {

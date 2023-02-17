@@ -6,7 +6,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator  from '../components/FormValidator.js'
-import { api } from '../components/Api';
+import { Api } from '../components/Api';
 import PopupWithConfirm from '../components/PopupWithConfirm';
 
 // Переменные для Popup "Редактировать профиль"
@@ -28,6 +28,16 @@ const avatar = document.querySelector('.profile__avatar')
 
 let myUserId;
 
+// Создание объекта класса API
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
+  headers: {
+    authorization: '281df4cd-64fd-4e10-9c44-1157fa2ba97c',
+    'Content-Type': 'application/json'
+  }
+}); 
+
+
 // Создание класса UserInfo
 const profileInfo = new UserInfo({
   profileNameSelector: '.profile__text-title', 
@@ -42,6 +52,7 @@ const handleAvatarUpdateSubmit = (evt, avatarInput) => {
   api.avatarUpdate(avatarInput.link) // отправляем новую ссылку на сервер
   .then((data) => { // если все ок - меняем аватар
     document.querySelector('.profile__avatar').src = data.avatar;
+    popupUdpadeAvatar.close();
   })
   .catch ((err) => {
     console.log(err);
@@ -49,17 +60,19 @@ const handleAvatarUpdateSubmit = (evt, avatarInput) => {
   .finally (() => {
     popupUdpadeAvatar.setSubmitButtonText('Сохранить');
   });
-  popupUdpadeAvatar.close();
 }
 
 // Создание класса для попапа "Обновить аватар" 
 const popupUdpadeAvatar = new PopupWithForm('#popup-update-avatar', handleAvatarUpdateSubmit);
 popupUdpadeAvatar.setEventListeners();
 
-// Слушатель клика на кпопку редактирования аватара
-avatar.addEventListener('click', () => {
+// функция открытия попапа аватар
+const openPopupAvatar = () => {
   popupUdpadeAvatar.open();
-})
+}
+
+// Слушатель клика на кпопку редактирования аватара
+avatar.addEventListener('click', openPopupAvatar)
 
 // ПОПАП ПРОФИЛЬ 
 // 
@@ -71,14 +84,14 @@ const handleProfilFormSubmit = (evt, values) => {
   .then((data) => { //если ок - меняем данные на странице
     document.querySelector('.profile__text-title').textContent = data.name;
     document.querySelector('.profile__text-subtitle').textContent = data.about;
+    handleProfilePopup.close();
   })
   .catch ((err) => {
     console.log(err);
   })
   .finally(() => {
     handleProfilePopup.setSubmitButtonText('Сохранить');
-  })
-  handleProfilePopup.close();
+  }) 
 }
 
 // Создание класса для попапа "Редактировать профиль"
@@ -152,11 +165,14 @@ const addNewCard = (evt, values) => {
 const handlePlacePopup = new PopupWithForm('#popup-place', addNewCard);
 handlePlacePopup.setEventListeners();
 
-// Слушатель клика на кнопку "Добавить карточку"
-popupPlaceOpenButton.addEventListener('click', () => {
+// функция открытия попапа место
+const openPopupPlace = () => {
   popupAddCardValidation.resetValidation(); 
   handlePlacePopup.open();
-});
+}
+
+// Слушатель клика на кнопку "Добавить карточку"
+popupPlaceOpenButton.addEventListener('click', openPopupPlace);
 
 // функция удаления карточки
 const handleDeleteCard = (card) => {
@@ -207,21 +223,21 @@ popupUdpadeAvatarValidation.enableValidation();
 
 
 //карточки отображаются на странице после получения id пользователя.
-const getData = () => {
-  api.getProfileInfo()
-    .then(data => {
-      document.querySelector('.profile__text-title').textContent = data.name;
-      document.querySelector('.profile__text-subtitle').textContent = data.about;
-      document.querySelector('.profile__avatar').src = data.avatar;
-      myUserId = data._id
-    })
-    .then(() => {
-      getCardData()
-    })
-    .catch ((err) => {
-      console.log(err);
-    })
-}
+Promise.all([api.getProfileInfo(), api.getInitialCard()])
+.then(([data, initialCard]) => {
+  document.querySelector('.profile__text-title').textContent = data.name;
+  document.querySelector('.profile__text-subtitle').textContent = data.about;
+  document.querySelector('.profile__avatar').src = data.avatar;
+  myUserId = data._id;
+
+  defaultCardList.renderItems({
+    data: initialCard
+    });
+}) 
+.catch ((err) => {
+  console.log(err);
+})
+
 
 //функция получения и отображения данных карточек
 const getCardData = () => {
@@ -237,3 +253,4 @@ const getCardData = () => {
 }
 
 getData()
+
